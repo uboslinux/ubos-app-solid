@@ -48,8 +48,8 @@ package() {
     install -D -m0644 ${startdir}/tmpl/*.tmpl -t ${pkgdir}/ubos/share/${pkgname}/tmpl
 
 # Code
-    mkdir -p ${pkgdir}/ubos/share/${pkgname}/bin
-    cp -a ${srcdir}/node-solid-server-${pkgver}/* ${pkgdir}/ubos/share/${pkgname}/
+    mkdir -p ${pkgdir}/ubos/share/${pkgname}/solid-server
+    cp -a ${srcdir}/node-solid-server-${pkgver}/* ${pkgdir}/ubos/share/${pkgname}/solid-server/
 
 # License
     install -D -m644 ${srcdir}/node-solid-server-${pkgver}/LICENSE -t ${pkgdir}/usr/share/licenses/${pkgname}/

@@ -42,7 +42,7 @@
                         "${appconfig.datadir}/static",
                         "${appconfig.datadir}/tmpl"
                     ],
-                    "source" : "$2"
+                    "source" : "solid-server/$2"
                 },
                 {
                     "type"         : "directory",
