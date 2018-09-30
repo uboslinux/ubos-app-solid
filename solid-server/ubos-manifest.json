@@ -31,7 +31,6 @@
                     "names"  : [
                         "${appconfig.datadir}/bin",
                         "${appconfig.datadir}/common",
-                        "${appconfig.datadir}/config",
                         "${appconfig.datadir}/default-templates",
                         "${appconfig.datadir}/default-views",
                         "${appconfig.datadir}/index.js",
@@ -39,10 +38,18 @@
                         "${appconfig.datadir}/node_modules",
                         "${appconfig.datadir}/package.json",
                         "${appconfig.datadir}/package-lock.json",
-                        "${appconfig.datadir}/static",
-                        "${appconfig.datadir}/tmpl"
+                        "${appconfig.datadir}/static"
                     ],
-                    "source" : "solid-server/$2"
+                    "source"       : "solid-server/$2"
+                },
+                {
+                    "type"         : "directorytree",
+                    "names"  : [
+                        "${appconfig.datadir}/config"
+                    ],
+                    "source"       : "solid-server/$2",
+                    "uname"        : "solid-server",
+                    "gname"        : "solid-server"
                 },
                 {
                     "type"         : "directory",

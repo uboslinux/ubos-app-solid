@@ -6,8 +6,8 @@
   "mount": "${appconfig.context}/",
   "configPath": "${appconfig.datadir}/config",
   "dbPath": "${appconfig.datadir}/db",
-  "sslKey": "./cert.key",
-  "sslCert": "./cert.pem",
+  "sslKey": "${apache2.ssldir}/${site.siteid}.key",
+  "sslCert": "${apache2.ssldir}/${site.siteid}.crt",
   "multiuser": false,
   "corsProxy": "/proxy"
 }

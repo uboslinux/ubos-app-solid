@@ -4,15 +4,18 @@ Documentation=https://solid.inrupt.com/docs/
 After=network.target
 
 [Service]
-ExecStartPre=/usr/share/ubos-admin/bin/ubos-service-prestart river@%I
-ExecStopPost=/usr/share/ubos-admin/bin/ubos-service-poststop river@%I
+ExecStartPre=/usr/share/ubos-admin/bin/ubos-service-prestart solid-server@%I
+ExecStopPost=/usr/share/ubos-admin/bin/ubos-service-poststop solid-server@%I
 Type=simple
 WorkingDirectory=/ubos/lib/solid-server/%I
 Environment=NODE_PATH=/ubos/share/solid-server/node_modules
-ExecStart=/ubos/share/solid-server/bin/solid start -v
+# Allow self-signed certs
+ExecStart=/ubos/share/solid-server/solid-server/bin/solid-test start -v
+# ExecStart=/ubos/share/solid-server/solid-server/bin/solid start -v
 User=solid-server
-Group=solid-server
-Restart=on-failure
+# Allow us to get at the TLS keys
+Group=http
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
