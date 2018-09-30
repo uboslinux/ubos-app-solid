@@ -1,0 +1,56 @@
+developer=https://github.com/solid
+url=https://github.com/solid/node-solid-server
+maintainer=https://indiecomputing.com/
+pkgname=$(basename $(pwd))
+pkgver=4.1.4
+pkgrel=1
+pkgdesc="Solid server on top of the file-system in NodeJS"
+arch=('any')
+license=("custom:solid-server")
+source=("solid-server-${pkgver}.tar.gz::https://github.com/solid/node-solid-server/archive/v${pkgver}.tar.gz")
+releasepage=('https://github.com/solid/node-solid-server/releases')
+depends=(
+    'nodejs'
+)
+makedepends=(
+    'npm'
+    'git'
+)
+options=('!strip')
+sha512sums=('4099dc6087093eba1b05bf2fc5ba420caa6b802519b44560c8a1b605d5840acb595687737fd1726492efc6d897d85f3f678c305fb377a68b00bf74f79308c127')
+
+build() {
+    cd ${srcdir}/node-solid-server-${pkgver}
+    npm install
+
+    # npm puts those _where fields everywhere in to package.json, and makepkg does not
+    # like those absolute paths in there. We don't either. So let's take them out:
+    find . -name package.json -exec perl -pi -e 's,^\s*"_where".*$,,g' {} \;
+    find . -name package.json -exec perl -pi -e "s,$(pwd).*node_modules,/ubos/share/${pkgname}/mode_modules,g" {} \;
+    find . -name package.json -exec perl -pi -e "s,\"$(pwd)\",\".\",g" {} \;
+}
+
+package() {
+# Manifest
+   install -D -m0644 ${startdir}/ubos-manifest.json ${pkgdir}/ubos/lib/ubos/manifests/${pkgname}.json
+
+# Icons
+#    install -D -m0644 ${startdir}/appicons/{72x72,144x144}.png -t ${pkgdir}/ubos/http/_appicons/${pkgname}/
+
+# Data directory
+    mkdir -p ${pkgdir}/ubos/lib/${pkgname}
+
+# Systemd
+    install -D -m0644 ${startdir}/systemd/*.service -t ${pkgdir}/usr/lib/systemd/system/
+    install -D -m0644 ${startdir}/systemd/sysusers ${pkgdir}/usr/lib/sysusers.d/${pkgname}.conf
+
+# Templates
+    install -D -m0644 ${startdir}/tmpl/*.tmpl -t ${pkgdir}/ubos/share/${pkgname}/tmpl
+
+# Code
+    mkdir -p ${pkgdir}/ubos/share/${pkgname}/bin
+    cp -a ${srcdir}/node-solid-server-${pkgver}/* ${pkgdir}/ubos/share/${pkgname}/
+
+# License
+    install -D -m644 ${srcdir}/node-solid-server-${pkgver}/LICENSE -t ${pkgdir}/usr/share/licenses/${pkgname}/
+}

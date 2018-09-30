@@ -1,0 +1,13 @@
+{
+  "root": "${appconfig.datadir}/data",
+  "port": "${appconfig.tcpport.main}",
+  "serverUri": "${site.protocol}://${site.hostname}",
+  "webid": true,
+  "mount": "${appconfig.context}/",
+  "configPath": "${appconfig.datadir}/config",
+  "dbPath": "${appconfig.datadir}/db",
+  "sslKey": "./cert.key",
+  "sslCert": "./cert.pem",
+  "multiuser": false,
+  "corsProxy": "/proxy"
+}

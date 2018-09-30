@@ -1,0 +1,18 @@
+[Unit]
+Description=solid-server - Social Linked Data
+Documentation=https://solid.inrupt.com/docs/
+After=network.target
+
+[Service]
+ExecStartPre=/usr/share/ubos-admin/bin/ubos-service-prestart river@%I
+ExecStopPost=/usr/share/ubos-admin/bin/ubos-service-poststop river@%I
+Type=simple
+WorkingDirectory=/ubos/lib/solid-server/%I
+Environment=NODE_PATH=/ubos/share/solid-server/node_modules
+ExecStart=/ubos/share/solid-server/bin/solid start -v
+User=solid-server
+Group=solid-server
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,23 @@
+#
+# Copyright (C) 2018 and later, Indie Computing Corp. All rights reserved. License: see package.
+#
+
+ProxyPass /.well-known/solid https://127.0.0.1:${appconfig.tcpport.main}/.well-known/solid
+ProxyPass /.well-known/openid-configuration https://127.0.0.1:${appconfig.tcpport.main}/.well-known/openid-configuration
+
+ProxyPass /robots.txt !
+ProxyPass /favicon.ico !
+ProxyPass /sitemap.xml !
+ProxyPass /.well-known !
+ProxyPass /_common !
+ProxyPass /_errors !
+
+ProxyPass ${appconfig.contextorslash} https://127.0.0.1:${appconfig.tcpport.main}${appconfig.contextorslash}
+ProxyPassReverse ${appconfig.contextorslash} https://127.0.0.1:${appconfig.tcpport.main}${appconfig.contextorslash}
+ProxyPassReverseCookieDomain 127.0.0.1 ${site.hostname}
+
+ProxyPreserveHost On
+SSLProxyEngine on
+
+RequestHeader set X-Forwarded-Proto "${site.protocol}"
+RequestHeader set X-Frame-Options SAMEORIGIN
